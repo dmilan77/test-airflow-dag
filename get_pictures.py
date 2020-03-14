@@ -17,6 +17,12 @@ download_launches = BashOperator(
    task_id="download_launches",
    bash_command="curl -o /tmp/launches.json 'https://launchlibrary.net/1.4/launch?next=5&mode=verbose'",
    dag=dag,
+
+   executor_config = {
+   'request_memory': '128Mi',
+   'limit_memory': '128Mi',
+   'image': 'airflow/scipy:1.1.5'
+   }
 )
  
  
@@ -41,12 +47,22 @@ get_pictures = PythonOperator(
    task_id="get_pictures",
    python_callable=_get_pictures,
    dag=dag,
+   executor_config = {
+   'request_memory': '128Mi',
+   'limit_memory': '128Mi',
+   'image': 'airflow/scipy:1.1.5'
+   }
 )
  
 notify = BashOperator(
    task_id="notify",
    bash_command='echo "There are now $(ls /tmp/images/ | wc -l) images."',
    dag=dag,
+   executor_config = {
+   'request_memory': '128Mi',
+   'limit_memory': '128Mi',
+   'image': 'airflow/scipy:1.1.5'
+   }
 )
  
 download_launches >> get_pictures >> notify
