@@ -1,6 +1,6 @@
 from airflow import DAG
 from datetime import datetime, timedelta
-from airflow_home.plugins.my_operators  import MyFirstOperator, MyFirstSensor
+from airflow.operators import MyFirstOperator, MyFirstSensor
 
 
 default_arguments = {
