@@ -10,9 +10,9 @@ dag = DAG(
 
 get_operation = SFTPOperator(
     task_id="put_sftp",
-    ssh_conn_id="ssh_default",
+    ssh_conn_id="my_ssh_conn",
     local_filepath="/tmp/images",
-    remote_filepath="/upload",
+    remote_filepath="/home/ec2-user",
     operation="get",
     dag=dag
 )
