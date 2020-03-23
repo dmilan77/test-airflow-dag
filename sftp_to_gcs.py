@@ -1,5 +1,7 @@
 from airflow.contrib.operators.sftp_operator import SFTPOperator
 from airflow import DAG
+from airflow.contrib.hooks.ssh_hook import SSHHook
+
 import datetime
 
 dag = DAG(
@@ -10,7 +12,7 @@ dag = DAG(
 
 get_operation = SFTPOperator(
     task_id="put_sftp",
-    ssh_conn_id="my_ssh_conn",
+    ssh_hook=SSHHook(""my_ssh_conn"),
     local_filepath="/tmp/images",
     remote_filepath="/home/ec2-user",
     operation="get",
