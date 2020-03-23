@@ -3,7 +3,7 @@ from airflow import DAG
 import datetime
 
 dag = DAG(
-    'test_dag',
+    'sftp_to_gcs_dag',
     start_date=datetime.datetime(2020, 1, 8, 0, 0, 0),
     schedule_interval='@daily'
 )
