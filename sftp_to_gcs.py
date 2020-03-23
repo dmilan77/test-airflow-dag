@@ -1,12 +1,15 @@
 from airflow.contrib.operators.sftp_operator import SFTPOperator
 from airflow import DAG
 from airflow.contrib.hooks.ssh_hook import SSHHook
+from airflow.utils.dates import days_ago
+
 
 import datetime
 
 default_args = {
     'owner': 'airflow',
-    'retries': 1
+    'retries': 1,
+    'start_date': days_ago(2)
      # 'queue': 'bash_queue',
     # 'pool': 'backfill',
     # 'priority_weight': 10,
