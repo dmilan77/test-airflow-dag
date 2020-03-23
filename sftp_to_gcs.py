@@ -22,4 +22,4 @@ put_operation = SFTPOperator(
 #                              )
 
 # put_operation >> get_operation
-put_operation >> get_operation
+put_operation 
