@@ -36,7 +36,7 @@ get_operation = SFTPOperator(
     task_id="put_sftp",
     ssh_hook=SSHHook("my_ssh_conn"),
     local_filepath="/tmp/images",
-    remote_filepath="/home/ec2-user",
+    remote_filepath="/home/ec2-user/README.rst",
     operation="get",
     dag=dag
 )
