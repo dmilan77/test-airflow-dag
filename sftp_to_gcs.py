@@ -1,4 +1,4 @@
-from airflow.operators.bash_operator import sftp_operator
+from airflow.operators.sftp_operator import sftp_operator
 from airflow import DAG
 import datetime
 
