@@ -7,6 +7,7 @@ import datetime
 dag = DAG(
     'sftp_to_gcs_dag',
     start_date=datetime.datetime(2020, 1, 8, 0, 0, 0),
+    'retries': 1,
     schedule_interval='@daily'
 )
 
