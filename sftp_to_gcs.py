@@ -16,9 +16,10 @@ put_operation = SFTPOperator(
     operation="put",
     dag=dag
 )
-get_operation = SFTPOperator(....,
-                             operation="get",
-                             dag=dag
-                             )
+# get_operation = SFTPOperator(....,
+#                              operation="get",
+#                              dag=dag
+#                              )
 
+# put_operation >> get_operation
 put_operation >> get_operation
