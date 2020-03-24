@@ -26,24 +26,19 @@ dag = DAG(
 get_operation = SFTPOperator(
     task_id="get_operation",
     ssh_hook=SSHHook("my_ssh_conn"),
-    local_filepath="/tmp/images",
-    remote_filepath="/home/ec2-user/README.rst",
+    local_filepath="/tmp/dlp-test",
+    remote_filepath="/home/ec2-user/dlp-test.csv",
     operation=SFTPOperation.GET,
     dag=dag
 )
 
 put_operation = FileToGoogleCloudStorageOperator(
     task_id="put_operation",
-    src="/tmp/images",
-    dst="from-aws",
-    bucket="us-east1-test-1-af1252e3-bucket",
+    src="/tmp/dlp-test",
+    dst="dlp-test",
+    bucket="dlp-testing-target",
     google_cloud_storage_conn_id="my-gcp-conn",
     dag=dag
 )
-# get_operation = SFTPOperator(....,
-#                              operation="get",
-#                              dag=dag
-#                              )
 
-# put_operation >> get_operation
 get_operation >> put_operation
