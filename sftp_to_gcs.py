@@ -1,5 +1,6 @@
 from airflow.contrib.operators.sftp_operator import SFTPOperator
 from airflow.contrib.operators.sftp_operator import SFTPOperation
+from airflow.contrib.operators.file_to_gcs import FileToGoogleCloudStorageOperator
 
 from airflow import DAG
 from airflow.contrib.hooks.ssh_hook import SSHHook
@@ -12,19 +13,7 @@ default_args = {
     'owner': 'airflow',
     'retries': 1,
     'start_date': days_ago(2)
-     # 'queue': 'bash_queue',
-    # 'pool': 'backfill',
-    # 'priority_weight': 10,
-    # 'end_date': datetime(2016, 1, 1),
-    # 'wait_for_downstream': False,
-    # 'dag': dag,
-    # 'sla': timedelta(hours=2),
-    # 'execution_timeout': timedelta(seconds=300),
-    # 'on_failure_callback': some_function,
-    # 'on_success_callback': some_other_function,
-    # 'on_retry_callback': another_function,
-    # 'sla_miss_callback': yet_another_function,
-    # 'trigger_rule': 'all_success'
+
 }
 
 dag = DAG(
@@ -35,11 +24,20 @@ dag = DAG(
 )
 
 get_operation = SFTPOperator(
-    task_id="put_sftp",
+    task_id="get_operation",
     ssh_hook=SSHHook("my_ssh_conn"),
     local_filepath="/tmp/images",
     remote_filepath="/home/ec2-user/README.rst",
     operation=SFTPOperation.GET,
+    dag=dag
+)
+
+put_operation = FileToGoogleCloudStorageOperator(
+    task_id="put_operation",
+    src="/tmp/images",
+    dst="from-aws",
+    bucket="us-east1-test-1-af1252e3-bucket",
+    google_cloud_storage_conn_id="my-gcp-conn",
     dag=dag
 )
 # get_operation = SFTPOperator(....,
@@ -48,4 +46,4 @@ get_operation = SFTPOperator(
 #                              )
 
 # put_operation >> get_operation
-get_operation
+get_operation >> put_operation
